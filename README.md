@@ -28,7 +28,7 @@ The following examples demonstrate how to use both Document API and REST API to 
 ## The Document API
 
 The Document API allows you to store data without a Schema, it will create a default schema like so (in this example: keyspace=`ks01`, table=`users`):
-```
+```sql
 CREATE TABLE ks01.users (
     key text,
     p0 text,
@@ -106,6 +106,9 @@ In order to select values you can run the following query:
 SELECT key, p0, leaf, text_value FROM users ;
 ```
 
+Create a collection using Document API:
+
+```bash
 curl --request POST \
   --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/namespaces/${ASTRA_DB_KEYSPACE}/collections/members \
   -H "X-Cassandra-Token: ${ASTRA_DB_APPLICATION_TOKEN}" \
@@ -122,20 +125,23 @@ curl --request POST \
   "location":"Asia",
   "name":"eight"
   }'
+```
 
 ## REST API
 
 Using REST API you must define a schema before adding data:
 
 ## Create a schema
+```bash
 curl --request POST \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/schemas/keyspaces/${ASTRA_DB_KEYSPACE}/tables \
     --header 'content-type: application/json' \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}" \
     --data '{"name":"members","ifNotExists":true,"columnDefinitions": [ {"name":"id","typeDefinition":"uuid","static":false}, {"name":"github","typeDefinition":"text","static":false}, {"name":"location","typeDefinition":"text","static":false}, {"name":"name","typeDefinition":"text","static":false}],"primaryKey": {"partitionKey":["id"]},"tableOptions":{"defaultTimeToLive":0}}'
+```
 
-
-## Add row
+## Add some rows
+```bash
 curl --request POST \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members \
     --header 'content-type: application/json' \
@@ -157,14 +163,19 @@ curl --request POST \
     "location":"Asia",
     "name":"eight"
     }'    
+```
 
 ## Retrieve a row
+```bash
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members/5ea53e52-dd0c-49af-82c2-f3e210530e2f \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+```
 
 ## Delete a row
+```bash
 curl --request DELETE \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members/3210ed59-5cb4-486b-ba5a-158139213276 \
     --header 'content-type: application/json' \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+```
