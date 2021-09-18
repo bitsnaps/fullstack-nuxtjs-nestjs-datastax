@@ -49,7 +49,7 @@ export class AppService {
 
     const collection = await this.getClient();
 
-    // Create a documents
+    // Create documents
     // try {
       // for (var i = 0; i < members.length; i++) {
         // await collection.create(members[i].id, members[i])
@@ -123,10 +123,10 @@ export class AppService {
       // `${basePath}/5ea53e52-dd0c-49af-82c2-f3e210530e2f/name` // WORKS ONLY WTIH Document API
     );*/
 
-    // search a collection of documents
+    // search for collection of documents
     // const { data, status } = await restClient.get(basePath, {});
 
-    /*/ search a collection of documents
+    /*/ search for collection of documents
     const { data, status } = await restClient.get(basePath, {
       params: {
         where: {

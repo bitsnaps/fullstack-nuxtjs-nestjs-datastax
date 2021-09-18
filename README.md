@@ -155,7 +155,7 @@ curl --request POST \
 
 curl --request POST \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members \
-    --header 'content-type: application/json' \
+    --header "content-type: application/json" \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}" \
     --data '{
     "id":"5ea53e52-dd0c-49af-82c2-f3e210530e2f",
@@ -165,12 +165,32 @@ curl --request POST \
     }'    
 ```
 
-## Retrieve a row
+## Retrieve multiple rows
+```bash
+# By default GET returns one row, add '&page-size=20' to get more results
+curl --request GET \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=20'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+
+# Get RAW output (`raw=true`)
+curl --request GET \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=10&raw=true'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+
+# Move to page state (`page-state`):
+curl --request GET \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=1&page-state=EPlPm8sU2Eutr80K8r-nRSIA8H____0A'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+
+# Sorting data (`sort={"name":"desc"}` need to have a CLUSTERING COLUMN to perform order)
+curl --request GET \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&sort=\{"name":"desc"\}&page-size=10'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+```
+
+## Retrieve a row by ID
 ```bash
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members/5ea53e52-dd0c-49af-82c2-f3e210530e2f \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
 ```
+
 
 ## Delete a row
 ```bash
