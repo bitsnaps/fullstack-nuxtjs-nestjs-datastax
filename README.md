@@ -175,7 +175,7 @@ curl --request GET \
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=10&raw=true'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
 
-# Move to page state (`page-state`):
+# Move to page state (`page-state`): this will move to the next row according to the specified `page-size`
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=1&page-state=EPlPm8sU2Eutr80K8r-nRSIA8H____0A'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
 
