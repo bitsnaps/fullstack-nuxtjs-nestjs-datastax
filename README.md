@@ -189,8 +189,19 @@ curl --request GET \
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members/5ea53e52-dd0c-49af-82c2-f3e210530e2f \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+# returns: {"count":1,"data":[{"name":"eight","github":"awesomecoder","location":"Asia","id":"5ea53e52-dd0c-49af-82c2-f3e210530e2f"}]}
 ```
 
+
+```bash
+curl --request PUT \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members/5ea53e52-dd0c-49af-82c2-f3e210530e2f \
+    --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}" \
+    --data '{
+    "name":"eights"
+    }'
+# returns: {"data":{"name":"eights"}}
+```
 
 ## Delete a row
 ```bash
@@ -199,3 +210,9 @@ curl --request DELETE \
     --header 'content-type: application/json' \
     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
 ```
+
+# API reference:
+Document & REST API:
+https://docs.datastax.com/en/astra/docs/_attachments/docv2.html
+DevOps operations:
+https://docs.datastax.com/en/astra/docs/_attachments/devopsv2.html
