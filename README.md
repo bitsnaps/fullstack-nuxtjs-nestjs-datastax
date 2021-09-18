@@ -182,6 +182,10 @@ curl --request GET \
 # Sorting data (`sort={"name":"desc"}` need to have a CLUSTERING COLUMN to perform order)
 curl --request GET \
     --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&sort=\{"name":"desc"\}&page-size=10'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
+
+# Select fields to retrieve (`fields=id,name`)
+curl --request GET \
+    --url https://${ASTRA_DB_ID}-${ASTRA_DB_REGION}.apps.astra.datastax.com/api/rest/v2/keyspaces/${ASTRA_DB_KEYSPACE}/members?where=\{"location":\{"$eq":"Asia"\}\}&page-size=10&fields=id,name'     --header "x-cassandra-token: ${ASTRA_DB_APPLICATION_TOKEN}"
 ```
 
 ## Retrieve a row by ID
